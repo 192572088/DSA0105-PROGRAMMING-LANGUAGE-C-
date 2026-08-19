@@ -1,0 +1,47 @@
+#include <iostream>
+using namespace std;
+
+class BookFair
+{
+    string Bname;
+    double price, discount, finalPrice;
+
+public:
+    void Input()
+    {
+        cout << "Enter book name: ";
+        cin >> Bname;
+
+        cout << "Enter price: ";
+        cin >> price;
+    }
+
+    void calculate()
+    {
+        if (price <= 1000)
+            discount = price * 0.02;
+        else if (price <= 3000)
+            discount = price * 0.10;
+        else
+            discount = price * 0.15;
+
+        finalPrice = price - discount;
+    }
+
+    void display()
+    {
+        cout << "\nBook Name: " << Bname << endl;
+        cout << "Price after discount: Rs. " << finalPrice << endl;
+    }
+};
+
+int main()
+{
+    BookFair b;
+
+    b.Input();
+    b.calculate();
+    b.display();
+
+    return 0;
+}
