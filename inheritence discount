@@ -1,0 +1,94 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+class Item
+{
+protected:
+    int item_no;
+    string name;
+    float price;
+
+public:
+    void acceptItem()
+    {
+        cout << "Enter Item No: ";
+        cin >> item_no;
+
+        cout << "Enter Item Name: ";
+        cin >> name;
+
+        cout << "Enter Price: ";
+        cin >> price;
+    }
+};
+
+class DiscountedItem : public Item
+{
+    float discount_percent;
+
+public:
+    void acceptDiscount()
+    {
+        cout << "Enter Discount (%): ";
+        cin >> discount_percent;
+    }
+
+    float getDiscountedPrice()
+    {
+        return price - (price * discount_percent / 100);
+    }
+
+    void display()
+    {
+        float discount = price * discount_percent / 100;
+        float finalPrice = getDiscountedPrice();
+
+        cout << left << setw(10) << item_no
+             << setw(15) << name
+             << setw(12) << price
+             << setw(12) << discount_percent
+             << setw(12) << discount
+             << setw(12) << finalPrice << endl;
+    }
+};
+
+int main()
+{
+    int n;
+    float total = 0;
+
+    cout << "Enter number of items: ";
+    cin >> n;
+
+    DiscountedItem item[50];
+
+    for (int i = 0; i < n; i++)
+    {
+        cout << "\nEnter details of Item " << i + 1 << ":\n";
+        item[i].acceptItem();
+        item[i].acceptDiscount();
+    }
+
+    cout << "\n================ ITEM BILL ================\n";
+
+    cout << left << setw(10) << "Item No"
+         << setw(15) << "Name"
+         << setw(12) << "Price"
+         << setw(12) << "Disc%"
+         << setw(12) << "Discount"
+         << setw(12) << "Amount" << endl;
+
+    cout << "---------------------------------------------------------------\n";
+
+    for (int i = 0; i < n; i++)
+    {
+        item[i].display();
+        total += item[i].getDiscountedPrice();
+    }
+
+    cout << "---------------------------------------------------------------\n";
+    cout << "Total Amount = Rs. " << fixed << setprecision(2) << total << endl;
+
+    return 0;
+}
